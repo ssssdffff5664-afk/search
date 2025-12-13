@@ -268,8 +268,8 @@
                 <div class="pdf-title">بحث 1</div>
                 <div class="pdf-title-en">Research 1</div>
                 <button class="download-btn">
-                    <i class="fas fa-download"></i>
-                    تحميل البحث
+                    <i class="fas fa-eye"></i>
+                    عرض البحث
                 </button>
             </div>
 
@@ -384,22 +384,14 @@
 
         <footer>
             <p>© 2024 فريق التخدير الطبي التطوعي | جميع الحقوق محفوظة</p>
-            <p style="margin-top: 10px;">Medical Anesthesia Team - Volunteer Medical Group</p>
+            <p style="margin-top: 10px;">Medical Anesthesia Team -  Medical Group</p>
         </footer>
     </div>
 
     <script>
         function downloadPDF(path) {
-            // محاكاة تحميل الملف
-            const link = document.createElement('a');
-            link.href = path;
-            link.download = path.split('/').pop();
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            // عرض رسالة تأكيد
-            alert('جاري تحميل البحث...\nDownloading research...');
+            // فتح الملف في نافذة جديدة
+            window.open(path, '_blank');
         }
 
         // تأثير الحركة عند التمرير
