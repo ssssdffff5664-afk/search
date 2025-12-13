@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكتبة الأبحاث الطبية - فريق التخدير الطبي التطوعي</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .logo i {
+            font-size: 50px;
+            color: white;
+        }
+
+        h1 {
+            color: #2d3748;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #667eea;
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .subtitle-en {
+            color: #764ba2;
+            font-size: 1.1em;
+            font-style: italic;
+        }
+
+        .library-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .pdf-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pdf-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .pdf-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .pdf-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.4);
+        }
+
+        .pdf-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            transition: all 0.3s ease;
+        }
+
+        .pdf-card:hover .pdf-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .pdf-icon i {
+            font-size: 40px;
+            color: white;
+        }
+
+        .pdf-title {
+            color: #2d3748;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .pdf-title-en {
+            color: #718096;
+            font-size: 0.9em;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #718096;
+            font-size: 0.9em;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: white;
+            font-size: 0.9em;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .subtitle {
+                font-size: 1.1em;
+            }
+
+            header {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+            </div>
+            <h1>مكتبة الأبحاث الطبية</h1>
+            <p class="subtitle">فريق التخدير الطبي التطوعي</p>
+            <p class="subtitle-en">Medical Anesthesia Team</p>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">10</div>
+                    <div class="stat-label">أبحاث علمية</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">مجانية</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number"><i class="fas fa-check-circle"></i></div>
+                    <div class="stat-label">محكمة علمياً</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="library-grid">
+            <div class="pdf-card" onclick="downloadPDF('pdfs/research1.pdf')">
+                <div class="pdf-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="pdf-title">بحث 1</div>
+                <div class="pdf-title-en">Research 1</div>
+                <button class="download-btn">
+                    <i class="fas fa-download"></i>
+                    تحميل البحث
+                </button>
+            </div>
+
+            <div class="pdf-card" onclick="downloadPDF('pdfs/research2.pdf')">
+                <div class="pdf-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="pdf-title">بحث 2</div>
+                <div class="pdf-title-en">Research 2</div>
+                <button class="download-btn">
+                    <i class="fas fa-download"></i>
+                    تحميل البحث
+                </button>
+            </div>
+
+            <div class="pdf-card" onclick="downloadPDF('pdfs/research3.pdf')">
+                <div class="pdf-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="pdf-title">بحث 3</div>
+                <div class="pdf-title-en">Research 3</div>
+                <button class="download-btn">
+                    <i class="fas fa-download"></i>
+                    تحميل البحث
+                </button>
+            </div>
+
+            <div class="pdf-card" onclick="downloadPDF('pdfs/research4.pdf')">
+                <div class="pdf-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="pdf-title">بحث 4</div>
+                <div class="pdf-title-en">Research 4</div>
+                <button class="download-btn">
+                    <i class="fas fa-download"></i>
+                    تحميل البحث
+                </button>
+            </div>
+
+            <div class="pdf-card" onclick="downloadPDF('pdfs/research5.pdf')">
+                <div class="pdf-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="pdf-title">بحث 5</div>
+                <div class="pdf-title-en">Research 5</div>
+                <button class="download-btn">
+                    <i class="fas fa-download"></i>
+                    تحميل البحث
+                </button>
+            </div>
+
+            <div class="pdf-card" onclick="downloadPDF('pdfs/research6.pdf')">
+                <div class="pdf-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="pdf-title">بحث 6</div>
+                <div class="pdf-title-en">Research 6</div>
+                <button class="download-btn">
+                    <i class="fas fa-download"></i>
+                    تحميل البحث
+                </button>
+            </div>
+
+            <div class="pdf-card" onclick="downloadPDF('pdfs/research7.pdf')">
+                <div class="pdf-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="pdf-title">بحث 7</div>
+                <div class="pdf-title-en">Research 7</div>
+                <button class="download-btn">
+                    <i class="fas fa-download"></i>
+                    تحميل البحث
+                </button>
+            </div>
+
+            <div class="pdf-card" onclick="downloadPDF('pdfs/research8.pdf')">
+                <div class="pdf-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="pdf-title">بحث 8</div>
+                <div class="pdf-title-en">Research 8</div>
+                <button class="download-btn">
+                    <i class="fas fa-download"></i>
+                    تحميل البحث
+                </button>
+            </div>
+
+            <div class="pdf-card" onclick="downloadPDF('pdfs/research9.pdf')">
+                <div class="pdf-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="pdf-title">بحث 9</div>
+                <div class="pdf-title-en">Research 9</div>
+                <button class="download-btn">
+                    <i class="fas fa-download"></i>
+                    تحميل البحث
+                </button>
+            </div>
+
+            <div class="pdf-card" onclick="downloadPDF('pdfs/research10.pdf')">
+                <div class="pdf-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="pdf-title">بحث 10</div>
+                <div class="pdf-title-en">Research 10</div>
+                <button class="download-btn">
+                    <i class="fas fa-download"></i>
+                    تحميل البحث
+                </button>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2024 فريق التخدير الطبي التطوعي | جميع الحقوق محفوظة</p>
+            <p style="margin-top: 10px;">Medical Anesthesia Team - Volunteer Medical Group</p>
+        </footer>
+    </div>
+
+    <script>
+        function downloadPDF(path) {
+            // محاكاة تحميل الملف
+            const link = document.createElement('a');
+            link.href = path;
+            link.download = path.split('/').pop();
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // عرض رسالة تأكيد
+            alert('جاري تحميل البحث...\nDownloading research...');
+        }
+
+        // تأثير الحركة عند التمرير
+        const cards = document.querySelectorAll('.pdf-card');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.animation = `fadeInUp 0.6s ease forwards`;
+                    }, index * 100);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
