@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مكتبة الأبحاث الطبية - فريق التخدير الطبي التطوعي</title>
+    <title>مكتبة الأبحاث الطبية - فريق التخدير الطبي</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
@@ -72,11 +72,99 @@
             font-style: italic;
         }
 
+        .filter-buttons {
+            margin: 25px auto 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 12px 30px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .filter-btn i {
+            font-size: 1.1em;
+        }
+
+        .new-badge {
+            background: #48bb78;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+        }
+
+        .search-box {
+            margin: 20px auto 0;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 50px;
+            font-size: 1em;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 1.2em;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: white;
+            font-size: 1.2em;
+        }
+
         .library-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 30px;
             animation: fadeInUp 1s ease;
+            margin-bottom: 40px;
         }
 
         .pdf-card {
@@ -89,6 +177,8 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             position: relative;
             overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
         }
 
         .pdf-card::before {
@@ -138,6 +228,7 @@
             font-size: 1.1em;
             font-weight: 600;
             margin-bottom: 8px;
+            word-break: break-word;
         }
 
         .pdf-title-en {
@@ -145,9 +236,10 @@
             font-size: 0.9em;
             font-style: italic;
             margin-bottom: 15px;
+            word-break: break-word;
         }
 
-        .download-btn {
+        .view-btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
@@ -162,7 +254,7 @@
             gap: 10px;
         }
 
-        .download-btn:hover {
+        .view-btn:hover {
             transform: scale(1.05);
             box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
         }
@@ -190,11 +282,95 @@
             font-size: 0.9em;
         }
 
+        .social-links {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            margin-top: 50px;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .social-links h3 {
+            color: #2d3748;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .social-links-en {
+            color: #718096;
+            font-size: 1em;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .telegram-btn {
+            background: linear-gradient(135deg, #0088cc 0%, #005580 100%);
+        }
+
+        .website-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .instagram-btn {
+            background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        .social-btn i {
+            font-size: 1.3em;
+        }
+
         footer {
             text-align: center;
-            margin-top: 50px;
+            margin-top: 30px;
+            padding: 20px;
             color: white;
             font-size: 0.9em;
+        }
+
+        .no-results {
+            grid-column: 1/-1;
+            text-align: center;
+            color: white;
+            padding: 60px 20px;
+        }
+
+        .no-results i {
+            font-size: 4em;
+            margin-bottom: 20px;
+            opacity: 0.7;
+        }
+
+        .no-results h2 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
         }
 
         @keyframes fadeInDown {
@@ -231,6 +407,15 @@
             header {
                 padding: 30px 20px;
             }
+
+            .social-buttons {
+                flex-direction: column;
+            }
+
+            .social-btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -246,171 +431,300 @@
             
             <div class="stats">
                 <div class="stat-item">
-                    <div class="stat-number">10</div>
+                    <div class="stat-number" id="total-pdfs">0</div>
                     <div class="stat-label">أبحاث علمية</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="new-pdfs">0</div>
+                    <div class="stat-label">أبحاث جديدة</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-number">100%</div>
                     <div class="stat-label">مجانية</div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number"><i class="fas fa-check-circle"></i></div>
-                    <div class="stat-label">محكمة علمياً</div>
-                </div>
+            </div>
+
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterPDFs('all')" id="btn-all">
+                    <i class="fas fa-list"></i>
+                    <span>جميع الأبحاث | All</span>
+                </button>
+                <button class="filter-btn" onclick="filterPDFs('new')" id="btn-new">
+                    <i class="fas fa-star"></i>
+                    <span>الجديدة | New</span>
+                    <span class="new-badge" id="new-count">0</span>
+                </button>
+                <button class="filter-btn" onclick="filterPDFs('research')" id="btn-research">
+                    <i class="fas fa-book"></i>
+                    <span>الأساسية | Research</span>
+                </button>
+            </div>
+
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    class="search-input" 
+                    id="search-input" 
+                    placeholder="ابحث عن بحث معين... Search for research..."
+                >
+                <i class="fas fa-search search-icon"></i>
             </div>
         </header>
 
-        <div class="library-grid">
-            <div class="pdf-card" onclick="downloadPDF('research1.pdf')">
-                <div class="pdf-icon">
-                    <i class="fas fa-file-pdf"></i>
-                </div>
-                <div class="pdf-title">بحث 1</div>
-                <div class="pdf-title-en">Research 1</div>
-                <button class="download-btn">
-                    <i class="fas fa-eye"></i>
-                    عرض البحث
-                </button>
-            </div>
+        <div class="loading" id="loading">
+            <i class="fas fa-spinner fa-spin"></i> جاري تحميل الأبحاث...
+        </div>
 
-            <div class="pdf-card" onclick="downloadPDF('research2.pdf')">
-                <div class="pdf-icon">
-                    <i class="fas fa-file-pdf"></i>
-                </div>
-                <div class="pdf-title">بحث 2</div>
-                <div class="pdf-title-en">Research 2</div>
-                <button class="download-btn">
-                    <i class="fas fa-download"></i>
-                    تحميل البحث
-                </button>
-            </div>
+        <div class="library-grid" id="library-grid"></div>
 
-            <div class="pdf-card" onclick="downloadPDF('research3.pdf')">
-                <div class="pdf-icon">
-                    <i class="fas fa-file-pdf"></i>
-                </div>
-                <div class="pdf-title">بحث 3</div>
-                <div class="pdf-title-en">Research 3</div>
-                <button class="download-btn">
-                    <i class="fas fa-download"></i>
-                    تحميل البحث
-                </button>
-            </div>
-
-            <div class="pdf-card" onclick="downloadPDF('research4.pdf')">
-                <div class="pdf-icon">
-                    <i class="fas fa-file-pdf"></i>
-                </div>
-                <div class="pdf-title">بحث 4</div>
-                <div class="pdf-title-en">Research 4</div>
-                <button class="download-btn">
-                    <i class="fas fa-download"></i>
-                    تحميل البحث
-                </button>
-            </div>
-
-            <div class="pdf-card" onclick="downloadPDF('research5.pdf')">
-                <div class="pdf-icon">
-                    <i class="fas fa-file-pdf"></i>
-                </div>
-                <div class="pdf-title">بحث 5</div>
-                <div class="pdf-title-en">Research 5</div>
-                <button class="download-btn">
-                    <i class="fas fa-download"></i>
-                    تحميل البحث
-                </button>
-            </div>
-
-            <div class="pdf-card" onclick="downloadPDF('research6.pdf')">
-                <div class="pdf-icon">
-                    <i class="fas fa-file-pdf"></i>
-                </div>
-                <div class="pdf-title">بحث 6</div>
-                <div class="pdf-title-en">Research 6</div>
-                <button class="download-btn">
-                    <i class="fas fa-download"></i>
-                    تحميل البحث
-                </button>
-            </div>
-
-            <div class="pdf-card" onclick="downloadPDF('research7.pdf')">
-                <div class="pdf-icon">
-                    <i class="fas fa-file-pdf"></i>
-                </div>
-                <div class="pdf-title">بحث 7</div>
-                <div class="pdf-title-en">Research 7</div>
-                <button class="download-btn">
-                    <i class="fas fa-download"></i>
-                    تحميل البحث
-                </button>
-            </div>
-
-            <div class="pdf-card" onclick="downloadPDF('research8.pdf')">
-                <div class="pdf-icon">
-                    <i class="fas fa-file-pdf"></i>
-                </div>
-                <div class="pdf-title">بحث 8</div>
-                <div class="pdf-title-en">Research 8</div>
-                <button class="download-btn">
-                    <i class="fas fa-download"></i>
-                    تحميل البحث
-                </button>
-            </div>
-
-            <div class="pdf-card" onclick="downloadPDF('research9.pdf')">
-                <div class="pdf-icon">
-                    <i class="fas fa-file-pdf"></i>
-                </div>
-                <div class="pdf-title">بحث 9</div>
-                <div class="pdf-title-en">Research 9</div>
-                <button class="download-btn">
-                    <i class="fas fa-download"></i>
-                    تحميل البحث
-                </button>
-            </div>
-
-            <div class="pdf-card" onclick="downloadPDF('research10.pdf')">
-                <div class="pdf-icon">
-                    <i class="fas fa-file-pdf"></i>
-                </div>
-                <div class="pdf-title">بحث 10</div>
-                <div class="pdf-title-en">Research 10</div>
-                <button class="download-btn">
-                    <i class="fas fa-download"></i>
-                    تحميل البحث
-                </button>
+        <div class="social-links">
+            <h3>تابعونا على</h3>
+            <p class="social-links-en">Follow Us On</p>
+            <div class="social-buttons">
+                <a href="https://t.me/anesthesia_team" target="_blank" class="social-btn telegram-btn">
+                    <i class="fab fa-telegram"></i>
+                    <span>تيليجرام | Telegram</span>
+                </a>
+                <a href="https://anesthesiateam1.mystrikingly.com/1" target="_blank" class="social-btn website-btn">
+                    <i class="fas fa-globe"></i>
+                    <span>الموقع الرسمي | Website</span>
+                </a>
+                <a href="https://www.instagram.com/anesthesia_team1?igsh=cTM1MWg3YmZqanM2" target="_blank" class="social-btn instagram-btn">
+                    <i class="fab fa-instagram"></i>
+                    <span>إنستقرام | Instagram</span>
+                </a>
             </div>
         </div>
 
         <footer>
             <p>© 2024 فريق التخدير الطبي التطوعي | جميع الحقوق محفوظة</p>
-            <p style="margin-top: 10px;">Medical Anesthesia Team -  Medical Group</p>
+            <p style="margin-top: 10px;">Medical Anesthesia Team</p>
         </footer>
     </div>
 
     <script>
-        function downloadPDF(path) {
-            // فتح الملف في نافذة جديدة
+        let allPDFs = [];
+        let newPDFs = [];
+        let researchPDFs = [];
+        let displayedPDFs = [];
+        let currentFilter = 'all';
+
+        // دالة لفتح الملف
+        function openPDF(path) {
             window.open(path, '_blank');
         }
 
-        // تأثير الحركة عند التمرير
-        const cards = document.querySelectorAll('.pdf-card');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.style.animation = `fadeInUp 0.6s ease forwards`;
-                    }, index * 100);
-                }
-            });
-        }, { threshold: 0.1 });
+        // دالة لاستخراج اسم الملف بدون امتداد
+        function getFileName(path) {
+            const name = path.replace('.pdf', '');
+            const researchMatch = name.match(/research(\d+)/i);
+            const newMatch = name.match(/new(\d+)/i);
+            
+            if (researchMatch) {
+                return `بحث ${researchMatch[1]}`;
+            } else if (newMatch) {
+                return `جديد ${newMatch[1]}`;
+            }
+            return name;
+        }
 
-        cards.forEach(card => {
-            card.style.opacity = '0';
-            observer.observe(card);
+        // دالة لاستخراج الاسم بالإنجليزية
+        function getFileNameEn(path) {
+            const name = path.replace('.pdf', '');
+            const researchMatch = name.match(/research(\d+)/i);
+            const newMatch = name.match(/new(\d+)/i);
+            
+            if (researchMatch) {
+                return `Research ${researchMatch[1]}`;
+            } else if (newMatch) {
+                return `New ${newMatch[1]}`;
+            }
+            return name;
+        }
+
+        // دالة للتحقق من وجود الملف
+        async function checkFileExists(url) {
+            try {
+                const response = await fetch(url, { method: 'HEAD' });
+                return response.ok;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        // دالة لإنشاء بطاقة PDF
+        function createPDFCard(filename, index) {
+            const card = document.createElement('div');
+            card.className = 'pdf-card';
+            card.style.animationDelay = `${index * 0.05}s`;
+            card.onclick = () => openPDF(filename);
+            card.dataset.filename = filename.toLowerCase();
+            
+            const isNew = filename.toLowerCase().startsWith('new');
+            const badge = isNew ? '<div style="position: absolute; top: 10px; right: 10px; background: #48bb78; color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.8em; font-weight: 700;">جديد | NEW</div>' : '';
+            
+            card.innerHTML = `
+                ${badge}
+                <div class="pdf-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="pdf-title">${getFileName(filename)}</div>
+                <div class="pdf-title-en">${getFileNameEn(filename)}</div>
+                <button class="view-btn">
+                    <i class="fas fa-eye"></i>
+                    عرض البحث
+                </button>
+            `;
+            
+            return card;
+        }
+
+        // دالة لتصفية الملفات
+        function filterPDFs(type) {
+            currentFilter = type;
+            
+            // تحديث الأزرار
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${type}`).classList.add('active');
+            
+            // تحديث القائمة المعروضة
+            if (type === 'all') {
+                displayedPDFs = [...allPDFs];
+            } else if (type === 'new') {
+                displayedPDFs = [...newPDFs];
+            } else if (type === 'research') {
+                displayedPDFs = [...researchPDFs];
+            }
+            
+            // إعادة عرض البطاقات
+            const searchValue = document.getElementById('search-input').value;
+            if (searchValue.trim()) {
+                searchPDFs(searchValue);
+            } else {
+                renderPDFs(displayedPDFs);
+            }
+        }
+
+        // دالة لعرض الملفات
+        function renderPDFs(pdfs) {
+            const grid = document.getElementById('library-grid');
+            grid.innerHTML = '';
+            
+            if (pdfs.length === 0) {
+                showNoResults(false);
+            } else {
+                pdfs.forEach((file, index) => {
+                    const card = createPDFCard(file, index);
+                    grid.appendChild(card);
+                });
+            }
+        }
+
+        // دالة لعرض رسالة عدم وجود نتائج
+        function showNoResults(isSearch = false) {
+            const grid = document.getElementById('library-grid');
+            const message = isSearch 
+                ? '<h2>لم يتم العثور على نتائج</h2><p>جرب البحث بكلمات أخرى</p>'
+                : '<h2>لا توجد ملفات PDF</h2><p>قم بإضافة ملفات PDF في نفس مجلد الصفحة</p>';
+            
+            grid.innerHTML = `
+                <div class="no-results">
+                    <i class="fas fa-${isSearch ? 'search' : 'folder-open'}"></i>
+                    ${message}
+                </div>
+            `;
+        }
+
+        // دالة البحث
+        function searchPDFs(query) {
+            const grid = document.getElementById('library-grid');
+            grid.innerHTML = '';
+
+            if (!query.trim()) {
+                renderPDFs(displayedPDFs);
+                return;
+            }
+
+            const filtered = displayedPDFs.filter(pdf => 
+                pdf.toLowerCase().includes(query.toLowerCase()) ||
+                getFileName(pdf).includes(query) ||
+                getFileNameEn(pdf).toLowerCase().includes(query.toLowerCase())
+            );
+
+            if (filtered.length === 0) {
+                showNoResults(true);
+            } else {
+                filtered.forEach((pdf, index) => {
+                    grid.appendChild(createPDFCard(pdf, index));
+                });
+            }
+        }
+
+        // دالة لتحميل الملفات
+        async function loadPDFs() {
+            const grid = document.getElementById('library-grid');
+            const loading = document.getElementById('loading');
+            const totalPdfsElement = document.getElementById('total-pdfs');
+            const newPdfsElement = document.getElementById('new-pdfs');
+            const newCountBadge = document.getElementById('new-count');
+            
+            const checkPromises = [];
+            
+            // البحث عن ملفات research (100 ملف)
+            for (let i = 1; i <= 100; i++) {
+                const filename = `research${i}.pdf`;
+                checkPromises.push(
+                    checkFileExists(filename).then(exists => {
+                        if (exists) {
+                            return { file: filename, type: 'research' };
+                        }
+                        return null;
+                    })
+                );
+            }
+            
+            // البحث عن ملفات new (100 ملف)
+            for (let i = 1; i <= 100; i++) {
+                const filename = `new${i}.pdf`;
+                checkPromises.push(
+                    checkFileExists(filename).then(exists => {
+                        if (exists) {
+                            return { file: filename, type: 'new' };
+                        }
+                        return null;
+                    })
+                );
+            }
+
+            // انتظار نتائج جميع الفحوصات
+            const results = await Promise.all(checkPromises);
+            const foundFiles = results.filter(f => f !== null);
+            
+            // تصنيف الملفات
+            researchPDFs = foundFiles.filter(f => f.type === 'research').map(f => f.file);
+            newPDFs = foundFiles.filter(f => f.type === 'new').map(f => f.file);
+            allPDFs = [...researchPDFs, ...newPDFs];
+            displayedPDFs = [...allPDFs];
+
+            loading.style.display = 'none';
+            totalPdfsElement.textContent = allPDFs.length;
+            newPdfsElement.textContent = newPDFs.length;
+            newCountBadge.textContent = newPDFs.length;
+
+            if (allPDFs.length === 0) {
+                showNoResults(false);
+            } else {
+                renderPDFs(displayedPDFs);
+            }
+        }
+
+        // إضافة مستمع للبحث
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            searchPDFs(e.target.value);
         });
+
+        // تحميل الملفات عند فتح الصفحة
+        loadPDFs();
     </script>
 </body>
 </html>
